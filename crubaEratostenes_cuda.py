@@ -1,8 +1,10 @@
-import cupy as cp
+import numpy as np
+from numba import njit
 
+@njit
 def criba_eratostenes(n):
     # Crear un array booleano de tamaño n+1, inicialmente lleno de True
-    primos = cp.full(n + 1, True, dtype=cp.bool_)
+    primos = np.full(n + 1, True, dtype=np.bool_)
     primos[0] = primos[1] = False  # 0 y 1 no son primos
     
     # Aplicar el algoritmo de la criba
@@ -12,10 +14,10 @@ def criba_eratostenes(n):
             primos[p * p: n + 1: p] = False
     
     # Obtener los números primos
-    return cp.nonzero(primos)[0]
+    return np.nonzero(primos)[0]
 
-# Configurar cupy para mostrar todos los elementos sin truncarlos
-cp.set_printoptions(threshold=cp.inf)
+# Configurar numpy para mostrar todos los elementos sin truncarlos
+np.set_printoptions(threshold=np.inf)
 
 # Ejemplo: Encontrar los números primos hasta 10,000
 n = 10000
